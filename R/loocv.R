@@ -1,9 +1,16 @@
 ################################################################################
 loocv <- function(data, nCores, parallel = TRUE, 
-                  models = c("Clayton", "Plackett", "Hougaard", "Poisson"), 
+                  models = c('Clayton', 'Plackett', 'Hougaard',
+                             'Poisson I', 'Poisson T', 'Poisson TI', 'Poisson TIa'),
                   ...) {
   # ************************************************************************** #
-  models <- match.arg(models, several.ok = TRUE)
+  models <- tolower(noSpP(models))
+  if ('poisson' %in% models) {
+    models <- setdiff(models, 'poisson')
+    models <- unique(c(models, paste0('poisson', c('i', 't', 'ti', 'tia'))))
+  }
+  models <- match.arg(models, several.ok = TRUE, choices = c(
+    'clayton', 'plackett', 'hougaard', paste0('poisson', c('i', 't', 'ti', 'tia'))))
   data$trialref <- factor(data$trialref)
   
   # library('parallel')
@@ -89,14 +96,19 @@ loocv <- function(data, nCores, parallel = TRUE,
 print.loocvSurrosurv <- function(x, n = 6, silent = FALSE, ...) {
   # ************************************************************************** #
   models <- setdiff(names(x[[1]]), 'margPars')
-  RES <- lapply(models, function(y){
-    preds <- sapply(x, function(trial)
-      c(obsBeta = trial$margPars['beta'], trial[[y]][-1])
+  RES <- lapply(models, function(y) {
+    preds <- sapply(x, function(trial) {
+      trialRes <- if (is.null(trial[[y]])) {
+        rep(NA, 2)
+      } else {
+        trial[[y]][-1]
+      }
+      c(obsBeta = trial$margPars['beta'], trialRes)
+      }
     )
     rownames(preds) <- c('obsBeta', 'lwr', 'upr')
     return(preds)
-  }
-  )
+  })
   names(RES) <- models
   
   if (silent) return(RES)
@@ -106,7 +118,7 @@ print.loocvSurrosurv <- function(x, n = 6, silent = FALSE, ...) {
     cat('\n  ', method, '\n')
     res2print <- format(RES[[i]][, 1:n], digits = 1, na.encode = FALSE)
     if (nrow(RES[[i]] > n))
-      res2print <- cbind(res2print, '  ' = c('...', '...'))
+      res2print <- cbind(res2print, '  ' = rep('...', 3))
     # rownames(res2print) <- paste0(
     #   sub('trt', '    Treatment effects on ', rownames(res2print)), ':')
     print(res2print, quote = FALSE, ...)
@@ -152,7 +164,8 @@ plot.loocvSurrosurv <- function(x,
       NC <- is.na(x[[i]][2, ]) | is.na(x[[i]][3, ])
       COLs[NC] <- 0
       points(1:ncol(x[[i]]), x[[i]][1, ], pch = 16, cex = 1.4, col = COLs)
-      mtext('x', 1, -1, at = which(NC), col=2, font=2)
+      if (any(NC))
+        mtext('x', 1, -1, at = which(NC), col=2, font=2)
     }
   }
 }

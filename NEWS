@@ -1,3 +1,11 @@
+Changes in version 1.1.4
+- added JSS manuscript as vignette('surrosurv')
+
+Changes in version 1.1
+- Poisson models can be fitted each separately
+
+################################################################################
+
 Changes in version 0.1.1 (2016-09-28)
 - fixed examples for poissonize()
 

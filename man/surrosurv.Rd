@@ -16,13 +16,14 @@
 }
 \usage{
 surrosurv(data,
-          models = c("Clayton", "Plackett", "Hougaard", "Poisson"), 
+          models = c('Clayton', 'Plackett', 'Hougaard',
+                     'Poisson I', 'Poisson T', 'Poisson TI', 'Poisson TIa'),
           intWidth,  nInts = 8,
           cop.OPTIMIZER = "bobyqa",
           poi.OPTIMIZER = "bobyqa",
           verbose = FALSE)
 
-\method{predict}{surrosurv}(object, ...)
+\method{predict}{surrosurv}(object, models = names(object), exact.models, ...)
 
 \method{print}{surrosurv}(x, silent = FALSE, 
       digits = 2, na.print = "-.--", ...)
@@ -35,7 +36,8 @@ surrosurv(data,
                       pred.ints = TRUE,
                       show.ste = TRUE,
                       surro.stats = TRUE, 
-                      xlab, ylab, ...)
+                      xlab, ylab, 
+                      xlim, ylim, mfrow, ...)
 }
 
 \arguments{
@@ -52,7 +54,7 @@ surrosurv(data,
   }
 }
   \item{models}{
-  For \code{surrosurv()}, which models should be fitted: 
+  For \code{surrosurv()}, which models should be fitted/plotted/predicted: 
     Clayton copula (unadjusted and adjusted),
     Plackett (unadjusted and adjusted),
     Hougaard (unadjusted and adjusted),
@@ -66,11 +68,11 @@ surrosurv(data,
     the models for which plots must be drawn.
   }
   \item{exact.models}{
-    If \code{TRUE}, only the elements of \code{x} which match exactly
-      any of \code{models} are plotted.
+    If \code{TRUE}, plots or predictions are generated only
+      for the elements of \code{x} which match exactly any of \code{models}.
     If \code{exact.models = TRUE}, partial matching is used.
-    By default, \code{exact.models = TRUE} if any of \code{models}
-      matches exactly any of the elements of \code{x}
+    By default, \code{exact.models = TRUE} if all the \code{models}
+      match exactly any of the \code{names(x)} (or  \code{names(object)})
       and \code{exact.models = FALSE} otherwise.
   }
   \item{intWidth}{
@@ -82,10 +84,10 @@ surrosurv(data,
     (see \link{poissonize})
   }
   \item{cop.OPTIMIZER}{
-    the optimizer for copula models (see \link{optimx})
+    the optimizer for copula models (see \code{\link{optimx}})
   }
   \item{poi.OPTIMIZER}{
-    the optimizer for Poisson models (see \link{optimx})
+    the optimizer for Poisson models (see \code{\link{optimx}})
   }
   \item{verbose}{
     should the function print out the model being fitted
@@ -97,8 +99,14 @@ surrosurv(data,
   \item{silent}{
     Should the results be return for storing without printing them?
   }
-  \item{digits, na.print, xlab, ylab, ...}{
-    other parameters for \link{print} or \link{plot}
+  \item{digits, na.print, xlab, ylab, xlim, ylim, ...}{
+    other parameters for \code{\link[base]{print}} or \code{\link[graphics]{plot}}
+  }
+  \item{mfrow}{
+    the number of rows and columns for displaying the plots
+    (see \code{\link[graphics]{par}}).
+    If missing, the default is computed using the function
+      \code{\link[grDevices]{n2mfrow}}
   }
   \item{n}{
     the number of rows to print
@@ -189,7 +197,7 @@ surrosurv(data,
 
 \examples{
   set.seed(150)
-  data <- simData.re(J = 20, Nj = 250,
+  data <- simData.re(N = 20, ni = 250,
                      R2 = 0.8, kTau = 0.4,
                      alpha = log(0.95), beta = log(0.85),
                      censorA = 15 * 365.25)

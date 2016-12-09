@@ -2,8 +2,8 @@ Package: surrosurv
 Type: Package
 Title: Evaluation of Failure Time Surrogate Endpoints in Individual
         Patient Data Meta-Analyses
-Version: 1.0.0
-Date: 2016-11-09
+Version: 1.1.5
+Date: 2016-12-08
 Authors@R: c(
   person("Federico", "Rotolo", email="federico.rotolo@gustaveroussy.fr", 
           role=c("aut", "cre")),
@@ -25,7 +25,12 @@ Depends: R (>= 2.10), stats, optimx, grDevices
 Imports: copula, eha, lme4, MASS, msm, mvmeta, optextras, parallel,
         parfm, survival, SurvCorr
 License: GPL-2
-NeedsCompilation: no
-Packaged: 2016-11-09 08:48:01 UTC; f_rotolo
+VignetteBuilder: knitr
+Suggests: knitr
 Repository: CRAN
-Date/Publication: 2016-11-10 08:19:07
+Repository/R-Forge/Project: surrosurv
+Repository/R-Forge/Revision: 90
+Repository/R-Forge/DateTimeStamp: 2016-12-08 20:07:46
+Date/Publication: 2016-12-09 02:08:53
+NeedsCompilation: no
+Packaged: 2016-12-08 20:25:35 UTC; rforge
