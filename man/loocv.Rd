@@ -14,19 +14,17 @@
     (Michiels et al, 2009).
 }
 \usage{
-loocv(data, nCores, parallel = TRUE,
-      models = c('Clayton', 'Plackett', 'Hougaard',
-                 'Poisson I', 'Poisson T', 'Poisson TI', 'Poisson TIa'), 
-      ...)
+\method{loocv}{surrosurv}(object, nCores, parallel = TRUE, models, ...)
 
-\method{print}{loocvSurrosurv}(x, n = 6, silent = FALSE, ...)
+\method{print}{loocvSurrosurv}(x, n = min(length(x), 6), silent = FALSE, ...)
           
 \method{plot}{loocvSurrosurv}(x, models, exact.models, ...)
 }
 
 \arguments{
-  \item{data}{
-    A \link{data.frame} with columns
+  \item{object}{
+    Either an object of class \code{surrosurv} with an attribute \code{data}
+      of class \link{data.frame} or a \link{data.frame} with columns
     \itemize{
       \item \code{trialref}, the trial reference
       \item \code{trt}, the treatment arm (-0.5 or 0.5)
@@ -44,7 +42,8 @@ loocv(data, nCores, parallel = TRUE,
     Should results be computed using parallelization?
   }
   \item{models, exact.models}{
-    Which models should be fitted (see \code{\link{surrosurv}()})
+    Which models should be fitted (see \code{\link{surrosurv}()}).
+    By default, the same models fitted in \code{object} (or \code{x}).
   }
   \item{x}{
     The fitted models, an object of class \code{\link{surrosurv}}

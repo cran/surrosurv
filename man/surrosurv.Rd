@@ -18,10 +18,12 @@
 surrosurv(data,
           models = c('Clayton', 'Plackett', 'Hougaard',
                      'Poisson I', 'Poisson T', 'Poisson TI', 'Poisson TIa'),
-          intWidth,  nInts = 8,
+          intWidth = NULL,  nInts = 8,
           cop.OPTIMIZER = "bobyqa",
-          poi.OPTIMIZER = "bobyqa",
-          verbose = FALSE)
+          poi.OPTIMIZER = "nloptwrap",
+          verbose = TRUE,
+          twoStage = FALSE,
+          keep.data = TRUE)
 
 \method{predict}{surrosurv}(object, models = names(object), exact.models, ...)
 
@@ -37,7 +39,7 @@ surrosurv(data,
                       show.ste = TRUE,
                       surro.stats = TRUE, 
                       xlab, ylab, 
-                      xlim, ylim, mfrow, ...)
+                      xlim, ylim, mfrow, main, ...)
 }
 
 \arguments{
@@ -92,6 +94,14 @@ surrosurv(data,
   \item{verbose}{
     should the function print out the model being fitted
   }
+  \item{twoStage}{
+    should the parameters of the baseline hazard functions
+    fixed to their marginal estimates (Shih and Louis, 1995)
+  }
+  \item{keep.data}{
+    should the data object be kept as attribute of the returned results?
+    (this is needed for \code{confint.surrosurv()})
+  }
 
   \item{x, object}{
     The fitted models, an object of class \code{\link{surrosurv}}
@@ -99,7 +109,7 @@ surrosurv(data,
   \item{silent}{
     Should the results be return for storing without printing them?
   }
-  \item{digits, na.print, xlab, ylab, xlim, ylim, ...}{
+  \item{digits, na.print, xlab, ylab, xlim, ylim, main, ...}{
     other parameters for \code{\link[base]{print}} or \code{\link[graphics]{plot}}
   }
   \item{mfrow}{
@@ -183,12 +193,17 @@ surrosurv(data,
   Evaluation of failure time surrogate endpoints in individual patient data
   meta-analyses of randomized clinical trials. A Poisson approach.
   \emph{Working paper}.
+
+  Shih JH, Louis TA.
+  Inferences on the Association Parameter in Copula Models
+  for Bivariate Survival Data.
+  \emph{Biometrics} 1995; \bold{51}:1384--1399.
+  \doi{10.2307/2533269}
   
   van Houwelingen HC, Arends LR, Stijnen T.
   Advanced methods in meta-analysis: multivariate approach and meta-regression.
   \emph{Statistics in Medicine} 2002; \bold{21}:589--624.
   \doi{10.1002/sim.1040}
-
 }
 
 \author{

@@ -1,8 +1,26 @@
 ################################################################################
-loocv <- function(data, nCores, parallel = TRUE, 
-                  models = c('Clayton', 'Plackett', 'Hougaard',
-                             'Poisson I', 'Poisson T', 'Poisson TI', 'Poisson TIa'),
-                  ...) {
+loocv <- function(object, ...) UseMethod('loocv')
+################################################################################
+loocv.surrosurv <- function(object, 
+                            nCores, 
+                            parallel = TRUE, 
+                            models,
+                            ...) {
+  if (missing(models)) {
+    allmodels <- c('Clayton', 'Plackett', 'Hougaard',
+                   'Poisson I', 'Poisson T',
+                   'Poisson TI', 'Poisson TIa')
+    
+    models <- allmodels[allmodels %in% names(object)]
+  }
+  loocv.data.frame(attr(object, 'data'), models = models, ...)
+}
+################################################################################
+loocv.data.frame <- function(object,
+                             nCores,
+                             parallel = TRUE,
+                             models = c('Clayton', 'Poisson TI'),
+                             ...) {
   # ************************************************************************** #
   models <- tolower(noSpP(models))
   if ('poisson' %in% models) {
@@ -11,13 +29,15 @@ loocv <- function(data, nCores, parallel = TRUE,
   }
   models <- match.arg(models, several.ok = TRUE, choices = c(
     'clayton', 'plackett', 'hougaard', paste0('poisson', c('i', 't', 'ti', 'tia'))))
-  data$trialref <- factor(data$trialref)
+  object$trialref <- factor(object$trialref)
   
+  nTrials <- nlevels(object$trialref)
+  if (nTrials < 3)
+    stop('At least three trials are needed for cross-validation.')
   # library('parallel')
   
   if (parallel) {
     totCores <- detectCores()
-    nTrials <- nlevels(data$trialref)
     
     if (missing(nCores)) {
       nCores <- min(nTrials, totCores)
@@ -31,8 +51,8 @@ loocv <- function(data, nCores, parallel = TRUE,
         message(paste0(
           'The number of cores (nCores=', nCores, ') is greater than',
           'the number of ', 
-          ifelse(nTrials < totCores, 'trials', 'cores detected'),
-          ')'))
+          ifelse(nTrials < totCores, 'trials', 'cores detected'), ' (', 
+          min(nTrials, totCores), ')'))
       
       nCores <- min(nCores, nTrials, totCores)
       message(paste('Parallel computing on', nCores,'cores'))
@@ -41,14 +61,14 @@ loocv <- function(data, nCores, parallel = TRUE,
   
   loof <- function(TRIAL, models2predict = models, ...) {
     alpha <- coef(coxph(Surv(timeS, statusS) ~ trt, 
-                        data = data[data$trialref == TRIAL, ]))[['trt']]
+                        data = object[object$trialref == TRIAL, ]))[['trt']]
     beta <- coef(coxph(Surv(timeT, statusT) ~ trt, 
-                       data = data[data$trialref == TRIAL, ]))[['trt']]
-    reddata <- data[data$trialref != TRIAL, ]
-    reddata$trialref <- factor(reddata$trialref)
+                       data = object[object$trialref == TRIAL, ]))[['trt']]
+    redobject <- object[object$trialref != TRIAL, ]
+    redobject$trialref <- factor(redobject$trialref)
     predint <- tryCatch(
       expr = {
-        surrofit <- surrosurv(data = reddata, models = models2predict, ...)
+        surrofit <- surrosurv(data = redobject, models = models2predict, ...)
         lapply(attr(predict(surrofit), 'predf'), function(x) x(alpha))
       },
       error = function(e) {
@@ -57,7 +77,7 @@ loocv <- function(data, nCores, parallel = TRUE,
           if (length(coppos) == 1) {
             models2predict <- c(
               models2predict[1:coppos - 1],
-              paste(cop, c('unadj', 'adj'), sep='.'),
+              paste(cop, c('unadj', 'adj'), sep = '.'),
               models2predict[(coppos + 1):length(models2predict)])
           }
         }
@@ -77,15 +97,19 @@ loocv <- function(data, nCores, parallel = TRUE,
     return(RES)
   }
   
-  cl <- makeCluster(nCores)
-  clusterExport(cl, 'data')
+  if (Sys.info()[1] == "Windows") {
+    cl <- makeCluster(nCores, type = 'PSOCK')
+    clusterExport(cl, 'object', environment())
+  } else {
+    cl <- makeCluster(nCores, type = 'FORK')
+  }
   clusterEvalQ(cl, library('survival'))
   clusterEvalQ(cl, library('surrosurv'))
-  loocvRES <- clusterApplyLB(cl, levels(data$trialref), loof, ...) 
+  loocvRES <- clusterApplyLB(cl, levels(object$trialref), loof, ...) 
   stopCluster(cl)
   rm(cl)
   
-  names(loocvRES) <- levels(data$trialref)
+  names(loocvRES) <- levels(object$trialref)
   class(loocvRES) <- c('loocvSurrosurv', class(loocvRES))
   return(loocvRES)
 }
@@ -93,20 +117,21 @@ loocv <- function(data, nCores, parallel = TRUE,
 
 
 ################################################################################
-print.loocvSurrosurv <- function(x, n = 6, silent = FALSE, ...) {
+print.loocvSurrosurv <- function(x, n = min(length(x), 6),
+                                 silent = FALSE, ...) {
   # ************************************************************************** #
   models <- setdiff(names(x[[1]]), 'margPars')
   RES <- lapply(models, function(y) {
     preds <- sapply(x, function(trial) {
       trialRes <- if (is.null(trial[[y]])) {
-        rep(NA, 2)
+        rep(NA, 3)
       } else {
-        trial[[y]][-1]
+        trial[[y]][]
       }
       c(obsBeta = trial$margPars['beta'], trialRes)
       }
     )
-    rownames(preds) <- c('obsBeta', 'lwr', 'upr')
+    rownames(preds) <- c('obsBeta', 'predict', 'lwr', 'upr')
     return(preds)
   })
   names(RES) <- models
@@ -118,7 +143,7 @@ print.loocvSurrosurv <- function(x, n = 6, silent = FALSE, ...) {
     cat('\n  ', method, '\n')
     res2print <- format(RES[[i]][, 1:n], digits = 1, na.encode = FALSE)
     if (nrow(RES[[i]] > n))
-      res2print <- cbind(res2print, '  ' = rep('...', 3))
+      res2print <- cbind(res2print, '  ' = rep('...', 4))
     # rownames(res2print) <- paste0(
     #   sub('trt', '    Treatment effects on ', rownames(res2print)), ':')
     print(res2print, quote = FALSE, ...)
@@ -157,15 +182,17 @@ plot.loocvSurrosurv <- function(x,
            panel.first = abline(h = 0, col = 'grey'))
       axis(1, 1:ncol(x[[i]]), labels = colnames(x[[i]]))
       axis(2, axTicks(2), format(round(exp(axTicks(2)), 2)), las = 1)
-      segments(1:ncol(x[[i]]), x[[i]][2, ], y1 = x[[i]][3, ], 
-               col = rgb(.8, .8, .8, .8), lwd = 5)
-      COLs <- 2 - (colSums(apply(x[[i]], 2, function(x)
-        order(x) == c(2, 1, 3))) == 3)
+      segments(1:ncol(x[[i]]), x[[i]]['lwr', ], y1 = x[[i]]['upr', ], 
+               col = rgb(.5, .5, .5, .8), lwd = 5)
+      segments(1:ncol(x[[i]]) - .01, x[[i]]['predict', ], 1:ncol(x[[i]]) + .01,
+               col = rgb(.2, .2, .2, .9), lwd = 3, lend = 2)
+      COLs <- 2 - (colSums(apply(x[[i]][c('obsBeta', 'lwr', 'upr'), ], 2, 
+                                 function(x) order(x) == c(2, 1, 3))) == 3)
       NC <- is.na(x[[i]][2, ]) | is.na(x[[i]][3, ])
       COLs[NC] <- 0
       points(1:ncol(x[[i]]), x[[i]][1, ], pch = 16, cex = 1.4, col = COLs)
       if (any(NC))
-        mtext('x', 1, -1, at = which(NC), col=2, font=2)
+        mtext('x', 1, -1, at = which(NC), col = 2, font = 2)
     }
   }
 }
