@@ -3,8 +3,14 @@ importFrom(copula,
            tau, claytonCopula, gumbelCopula, plackettCopula)
 importFrom(graphics,
            curve, mtext, points, polygon, text)
+importFrom(grDevices, 
+           palette)
 importFrom(MASS, 
            mvrnorm)
+importFrom(Matrix, 
+           nearPD)
+importFrom(msm, 
+           deltamethod, rtnorm)
 importFrom(SurvCorr, 
            survcorr)
 importFrom(parfm, 

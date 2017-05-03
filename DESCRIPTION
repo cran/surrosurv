@@ -2,8 +2,8 @@ Package: surrosurv
 Type: Package
 Title: Evaluation of Failure Time Surrogate Endpoints in Individual
         Patient Data Meta-Analyses
-Version: 1.1.10
-Date: 2017-02-27
+Version: 1.1.15
+Date: 2017-04-28
 Authors@R: c(
   person("Federico", "Rotolo", email="federico.rotolo@gustaveroussy.fr", 
           role=c("aut", "cre")),
@@ -22,16 +22,16 @@ Description: Provides functions for the evaluation of
     step (either adjusted or not for measurement error); (2) mixed proportional
     hazard models estimated via mixed Poisson GLM.
 Depends: R (>= 2.10), stats, optimx, grDevices
-Imports: copula, eha, lme4, MASS, msm, mvmeta, optextras, parallel,
-        parfm, survival, SurvCorr
+Imports: copula, eha, lme4, MASS, Matrix, msm, mvmeta, optextras,
+        parallel, parfm, survival, SurvCorr
 License: GPL-2
 VignetteBuilder: knitr
 Suggests: knitr
 Encoding: UTF-8
 Repository: CRAN
 Repository/R-Forge/Project: surrosurv
-Repository/R-Forge/Revision: 110
-Repository/R-Forge/DateTimeStamp: 2017-02-27 16:21:11
-Date/Publication: 2017-02-28 00:34:14
+Repository/R-Forge/Revision: 130
+Repository/R-Forge/DateTimeStamp: 2017-04-30 11:50:20
+Date/Publication: 2017-05-03 14:50:14 UTC
 NeedsCompilation: no
-Packaged: 2017-02-27 16:25:38 UTC; rforge
+Packaged: 2017-04-30 12:05:34 UTC; rforge

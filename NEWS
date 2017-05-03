@@ -1,3 +1,16 @@
+Changes in version 1.1.15 (2017-04-25)
+- fixed minor issue in prediction function for adjusted copula models
+
+Changes in version 1.1.14 (2017-04-06)
+- fixed issue in prediction intervals for mixed Poisson models
+
+Changes in version 1.1.13 (2017-03-28)
+- fixed issue in prediction intervals for adjusted copula models
+
+Changes in version 1.1.12 (2017-03-02)
+- loocv() now also returns the values of kTau and R2
+  estimated in each (N-1) fold
+
 Changes in version 1.1.10 (2017-02-27)
 - fixed issues with loocv when few trials (added controls)
 - added data 'gastadj'
