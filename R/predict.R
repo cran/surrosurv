@@ -188,8 +188,9 @@ ste <- function(x, models = names(x), exact.models) {
   
   res <- sapply(ind, function(i) {
     f <- function(y)
-      attr(x, 'predf')[[i]](y)[3, ] ^ 2
+      attr(x, 'predf')[[i]](y)['upr', ] ^ 2
     ste <- optimize(f, c(-1e8, 1e8))$minimum
+    ste <- ifelse(abs(f(ste)) > 1e-4, NA, ste)
     return(ste)
   })
   names(res) <- names(x)[ind]
@@ -330,19 +331,26 @@ plot.predictSurrosurv <- function(x,
         ...
       )
       if (show.ste) {
-        points(STE[i],
-               0,
-               col = 2,
-               pch = '|',
-               font = 2)
-        text(
-          STE[i],
-          0,
-          col = 2,
-          font = 2,
-          adj = c(1.1, -.5),
-          labels = paste('STE =', round(exp(STE[i]), 2))
-        )
+        if (is.na(STE[i])) {
+          message(paste0(
+            '[', format.methodNames(x)[i], 
+            '] The STE does not exist: the upper limits ',
+            'of the prediction intervals never cross the line HR=1'))
+        } else {
+          points(STE[i],
+                 0,
+                 col = 2,
+                 pch = '|',
+                 font = 2)
+          text(
+            STE[i],
+            0,
+            col = 2,
+            font = 2,
+            adj = c(1.1, -.5),
+            labels = paste('STE =', round(exp(STE[i]), 2))
+          )
+        }
       }
       if (surro.stats) {
         mtext(
