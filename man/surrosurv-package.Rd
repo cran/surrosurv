@@ -19,11 +19,17 @@
   Maintainer: \packageMaintainer{surrosurv}
 }
 \references{
+ Rotolo F, Paoletti X, Michiels S.
+  surrosurv: an R Package for the Evaluation of Failure Time Surrogate Endpoints 
+  in Individual Patient Data Meta-Analyses of Randomized Clinical Trials.
+  \emph{Computer Methhods and Programs in Biomedicine} 2018;
+  \doi{10.1016/j.cmpb.2017.12.005}
+
   Rotolo F, Paoletti X, Burzykowski T, Buyse M, Michiels S.
   A Poisson approach for the validation of failure time surrogate endpoints
   in individual patient data meta-analyses.
-  \emph{Statistical Methhods in Medical Research} 2017;
-  \bold{In Press}.
+  \emph{Statistical Methhods in Medical Research} 2019;
+  \bold{28(1)}.
   \doi{10.1177/0962280217718582}
   
   Burzykowski T, Molenberghs G, Buyse M et al.
@@ -54,5 +60,6 @@
 \keyword{ Poisson }
 
 \seealso{
-  \CRANpkg{Surrogate}, \CRANpkg{mvmeta}
+  \href{https://cran.r-project.org/package=Surrogate}{Surrogate}, 
+  \href{https://cran.r-project.org/package=mvmeta}{mvmeta}
 }

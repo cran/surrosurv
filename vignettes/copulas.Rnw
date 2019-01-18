@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage[cm]{fullpage}
+\usepackage[margin=1cm]{geometry}
 \usepackage{amsmath, natbib, hyperref, doi}
 %\VignetteIndexEntry{Parameterization of copula functions}
 %\VignetteKeyword{copula}

@@ -2,18 +2,21 @@ Package: surrosurv
 Type: Package
 Title: Evaluation of Failure Time Surrogate Endpoints in Individual
         Patient Data Meta-Analyses
-Version: 1.1.24
-Date: 2017-09-26
+Version: 1.1.25
+Date: 2019-01-18
 Authors@R: c(
-  person("Federico", "Rotolo", email="federico.rotolo@gustaveroussy.fr", 
-          role=c("aut", "cre")),
+  person("Federico", "Rotolo", role="aut"),
   person("Xavier", "Paoletti", role="ctr"),
   person("Marc", "Buyse", role="ctr"),
   person("Tomasz", "Burzykowski", role="ctr"),
-  person("Stefan", "Michiels", role="ctr"))
-Author: Federico Rotolo [aut, cre],
-  Xavier Paoletti [ctr], Marc Buyse [ctr], Tomasz Burzykowski [ctr], Stefan Michiels [ctr]
-Maintainer: Federico Rotolo <federico.rotolo@gustaveroussy.fr>
+  person("Stefan", "Michiels", email="stefan.michiels@gustaveroussy.fr", 
+          role=c("ctr", "cre")))
+Author: Federico Rotolo [aut],
+  Xavier Paoletti [ctr],
+  Marc Buyse [ctr],
+  Tomasz Burzykowski [ctr],
+  Stefan Michiels [ctr, cre]
+Maintainer: Stefan Michiels <stefan.michiels@gustaveroussy.fr>
 Description: Provides functions for the evaluation of
     surrogate endpoints when both the surrogate and the true endpoint are failure
     time variables. The approaches implemented are:
@@ -21,7 +24,7 @@ Description: Provides functions for the evaluation of
     the first step and either a linear regression of log-hazard ratios at the second
     step (either adjusted or not for measurement error);
     (2) mixed proportional hazard models estimated via mixed Poisson GLM
-    (Rotolo et al, 2017 <DOI:10.1177/0962280217718582>).
+    (Rotolo et al, 2019 <DOI:10.1177/0962280217718582>).
 Depends: R (>= 2.10), stats, optimx, grDevices
 Imports: copula, eha, lme4, MASS, Matrix, msm, mvmeta, optextras,
         parallel, parfm, survival, SurvCorr
@@ -30,6 +33,6 @@ VignetteBuilder: R.rsp
 Suggests: R.rsp
 Encoding: UTF-8
 NeedsCompilation: no
-Packaged: 2017-09-26 15:14:12 UTC; f_rotolo
+Packaged: 2019-01-18 20:50:07 UTC; F_ROTOLO
 Repository: CRAN
-Date/Publication: 2017-09-27 08:26:45 UTC
+Date/Publication: 2019-01-18 21:50:03 UTC

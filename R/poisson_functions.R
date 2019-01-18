@@ -218,8 +218,8 @@ poisSurr <- function(data,
       )
     }) -> attr(JOINT$poifitI, 'exec.time')
     
-    attr(JOINT$poifitI, 'kTau') <- parfm:::fr.lognormal(what = 'tau',
-                                                        sigma2 = as.double(summary(JOINT$poifitI)$varcor$id))
+    attr(JOINT$poifitI, 'kTau') <- fr.lognormal(what = 'tau',
+                                                sigma2 = as.double(summary(JOINT$poifitI)$varcor$id))
     
     RES$PoissonI <- list(
       kTau = attr(JOINT$poifitI, 'kTau'),
@@ -267,8 +267,8 @@ poisSurr <- function(data,
     }) -> attr(JOINT$poifitTI, 'exec.time')
     
     
-    attr(JOINT$poifitTI, 'kTau') <- parfm:::fr.lognormal(what = 'tau',
-                                                         sigma2 = as.double(summary(JOINT$poifitTI)$varcor$id))
+    attr(JOINT$poifitTI, 'kTau') <- fr.lognormal(what = 'tau',
+                                                 sigma2 = as.double(summary(JOINT$poifitTI)$varcor$id))
     R2 <- VarCorr(JOINT$poifitTI)$trialref[1, 2] ^ 2 /
       prod(diag(VarCorr(JOINT$poifitTI)$trialref))
     
@@ -360,8 +360,8 @@ poisSurr <- function(data,
       )
     }) -> attr(JOINT$poifitTIa, 'exec.time')
     
-    attr(JOINT$poifitTIa, 'kTau') <- parfm:::fr.lognormal(what = 'tau',
-                                                          sigma2 = as.double(summary(JOINT$poifitTIa)$varcor$id))
+    attr(JOINT$poifitTIa, 'kTau') <- fr.lognormal(what = 'tau',
+                                                  sigma2 = as.double(summary(JOINT$poifitTIa)$varcor$id))
     R2 <- VarCorr(JOINT$poifitTIa)$trialref[1, 2] ^ 2 /
       prod(diag(VarCorr(JOINT$poifitTIa)$trialref))
     

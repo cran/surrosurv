@@ -144,7 +144,7 @@ surrosurv(data,
   The moxed Poisson models that can be fit
   are used to estimate parameters of mixed proportional hazard models,
   as described for instance by Crowther et al (2014).
-  The statistical details are provided in Rotolo et al (WP).
+  The statistical details are provided in Rotolo et al (2019).
   
   The function \code{predict()} returns the estimated values
     of the log-hazard ratios on the true and the surrogate endpoints.
@@ -192,11 +192,17 @@ surrosurv(data,
   \emph{Journal of the America Statistical Association} 1965; \bold{60}:516--522.
   \doi{10.1080/01621459.1965.10480807}
   
+ Rotolo F, Paoletti X, Michiels S.
+  surrosurv: an R Package for the Evaluation of Failure Time Surrogate Endpoints 
+  in Individual Patient Data Meta-Analyses of Randomized Clinical Trials.
+  \emph{Computer Methhods and Programs in Biomedicine} 2018;
+  \doi{10.1016/j.cmpb.2017.12.005}
+  
  Rotolo F, Paoletti X, Burzykowski T, Buyse M, Michiels S.
   A Poisson approach for the validation of failure time surrogate endpoints
   in individual patient data meta-analyses.
-  \emph{Statistical Methhods in Medical Research} 2017;
-  \bold{In Press}.
+  \emph{Statistical Methhods in Medical Research} 2019;
+  \bold{28(1)}.
   \doi{10.1177/0962280217718582}
 
   Shih JH, Louis TA.
