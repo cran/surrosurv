@@ -15,9 +15,9 @@
     \item{timeT:}{Overall survival time (days).}
     \item{statusT:}{Overall survival indicator (0=censored, 1=death).}
     \item{timeS:}{Progression-free survival time (days).}
-    \item{statusS:}{Progression-free survival indicator (0=censored, 1=prgoression on death).}
+    \item{statusS:}{Progression-free survival indicator (0=censored, 1=progression on death).}
     \item{trialref:}{Trial indicator}
-    \item{trt:}{Treatment arm (-0.5 = control, 0.5=chemomtherapy).}
+    \item{trt:}{Treatment arm (-0.5 = control, 0.5=chemotherapy).}
     \item{id:}{Patient identifier.}
     }
   }
@@ -41,19 +41,19 @@ The GASTRIC Group data are available within the \code{surrosurv} package
     Progression-free survival as a surrogate for overall survival
     in advanced/recurrent gastric cancer trials: a meta-analysis.
     \emph{J Ntl Cancer Inst}, 105(21):1667-70, 2013.
-    doi:\href{http://dx.doi.org/10.1093/jnci/djt269}{10.1093/jnci/djt269}.
+    \doi{10.1093/jnci/djt269}.
     
   The GASTRIC group.
     Role of chemotherapy for advanced/recurrent gastric cancer:
     An individual-patient-data meta-analysis. 
     \emph{Eur J Cancer}, 49(7):1565-77, 2013.
-    doi:\href{http://dx.doi.org/10.1016/j.ejca.2012.12.016}{10.1016/j.ejca.2012.12.016}.
+    \doi{10.1016/j.ejca.2012.12.016}.
     
   Buyse M, Molenberghs G, Paoletti Xavier et al.
     Statistical evaluation of surrogate endpoints
     with examples from cancer clinical trials.
     \emph{Biom J}, 58(1):104-32, 2016.
-    doi:\href{http://dx.doi.org/10.1002/bimj.201400049}{10.1002/bimj.201400049}
+    \doi{10.1002/bimj.201400049}
 }
 \examples{
   \dontrun{

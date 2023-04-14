@@ -24,8 +24,13 @@ predict.surrosurv <- function(object,
   copulas <- intersect(c('Clayton', 'Plackett', 'Hougaard'), models)
   poissons <- grep('PoissonT', models, value = TRUE)
   
-  allRES <- c(# Copula models
+  allRES <- c(
+    # Copula models
     sapply(copulas, function(cop) {
+      if(all(is.na(unlist(object[[cop]])))){
+        empty <- data.frame(alpha=numeric(), beta=numeric())
+        return(list(unadj=empty, adj=empty))
+      }
       list(unadj = as.data.frame(object[[cop]]$unadj$step1[c('alpha', 'beta')]),
            adj = as.data.frame(object[[cop]]$adj$ranef))
     }),
@@ -40,8 +45,8 @@ predict.surrosurv <- function(object,
     colnames(object) <- c('trtS', 'trtT')
     return(object)
   })
-  names(allRES) <- c(paste(rep(copulas, each = 2), rep(c('unadj', 'adj'), length(copulas)), sep =
-                             '.'),
+  names(allRES) <- c(paste(rep(copulas, each = 2), rep(c('unadj', 'adj'), length(copulas)), 
+                           sep = '.'),
                      poissons)
   
   class(allRES)  <- c('predictSurrosurv', class(allRES))
@@ -134,7 +139,7 @@ predict.surrosurv <- function(object,
   return(allRES)
 }
 
-format.methodNames <- function(x) {
+format.methodNames <- function(x, ...) {
   sub(
     '.unadj',
     ' copula (Unadjusted)',
@@ -187,12 +192,14 @@ ste <- function(x, models = names(x), exact.models) {
   }
   
   res <- sapply(ind, function(i) {
+    if(nrow(x[[i]])==0) return(NA)
     f <- function(y)
       attr(x, 'predf')[[i]](y)['upr', ] ^ 2
-    ste <- optimize(f, c(-1e8, 1e8))$minimum
+    ste <- suppressWarnings(optimize(f, c(-1e8, 1e8))$minimum)
     ste <- ifelse(abs(f(ste)) > 1e-4, NA, ste)
     return(ste)
   })
+  
   names(res) <- names(x)[ind]
   class(res) <- 'steSurrosurv'
   return(res)

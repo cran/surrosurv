@@ -2,21 +2,18 @@ Package: surrosurv
 Type: Package
 Title: Evaluation of Failure Time Surrogate Endpoints in Individual
         Patient Data Meta-Analyses
-Version: 1.1.25
-Date: 2019-01-18
+Version: 1.1.26
 Authors@R: c(
-  person("Federico", "Rotolo", role="aut"),
-  person("Xavier", "Paoletti", role="ctr"),
-  person("Marc", "Buyse", role="ctr"),
-  person("Tomasz", "Burzykowski", role="ctr"),
-  person("Stefan", "Michiels", email="stefan.michiels@gustaveroussy.fr", 
-          role=c("ctr", "cre")))
-Author: Federico Rotolo [aut],
-  Xavier Paoletti [ctr],
-  Marc Buyse [ctr],
-  Tomasz Burzykowski [ctr],
-  Stefan Michiels [ctr, cre]
-Maintainer: Stefan Michiels <stefan.michiels@gustaveroussy.fr>
+  person("Federico", "Rotolo", role="aut", email="federico.rotolo@gustaveroussy.fr",
+          comment = c(ORCID = "0000-0003-4837-6501")),
+  person("Xavier", "Paoletti", role="ctb"),
+  person("Marc", "Buyse", role="ctb"),
+  person("Tomasz", "Burzykowski", role="ctb"),
+  person("Stefan", "Michiels", role="ctb", email="stefan.michiels@gustaveroussy.fr",
+          comment = c(ORCID = "0000-0002-6963-2968")),
+  person("Dan", "Chaltiel", role="cre", email="dan.chaltiel@gustaveroussy.fr",
+          comment = c(ORCID = "0000-0003-3488-779X")))
+Maintainer: Dan Chaltiel <dan.chaltiel@gustaveroussy.fr>
 Description: Provides functions for the evaluation of
     surrogate endpoints when both the surrogate and the true endpoint are failure
     time variables. The approaches implemented are:
@@ -24,15 +21,24 @@ Description: Provides functions for the evaluation of
     the first step and either a linear regression of log-hazard ratios at the second
     step (either adjusted or not for measurement error);
     (2) mixed proportional hazard models estimated via mixed Poisson GLM
-    (Rotolo et al, 2019 <DOI:10.1177/0962280217718582>).
-Depends: R (>= 2.10), stats, optimx, grDevices
-Imports: copula, eha, lme4, MASS, Matrix, msm, mvmeta, optextras,
-        parallel, parfm, survival, SurvCorr
+    (Rotolo et al, 2017 <DOI:10.1177/0962280217718582>).
+Depends: R (>= 3.5.0)
+Imports: copula, eha, grDevices, lme4, MASS, Matrix, msm, mvmeta,
+        optimx, parallel, parfm, stats, survival
 License: GPL-2
+URL: https://github.com/Oncostat/surrosurv
+BugReports: https://github.com/Oncostat/surrosurv/issues/
 VignetteBuilder: R.rsp
-Suggests: R.rsp
+Suggests: R.rsp, testthat (>= 3.0.0)
 Encoding: UTF-8
+Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2019-01-18 20:50:07 UTC; F_ROTOLO
+Packaged: 2023-04-13 07:54:04 UTC; Dan
+Author: Federico Rotolo [aut] (<https://orcid.org/0000-0003-4837-6501>),
+  Xavier Paoletti [ctb],
+  Marc Buyse [ctb],
+  Tomasz Burzykowski [ctb],
+  Stefan Michiels [ctb] (<https://orcid.org/0000-0002-6963-2968>),
+  Dan Chaltiel [cre] (<https://orcid.org/0000-0003-3488-779X>)
 Repository: CRAN
-Date/Publication: 2019-01-18 21:50:03 UTC
+Date/Publication: 2023-04-14 08:50:05 UTC

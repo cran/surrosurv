@@ -141,10 +141,10 @@ surrosurv(data,
   Burzykowski et al. (2001), which relies on the results
   by van Houwelingen et al. (2002).
   
-  The moxed Poisson models that can be fit
+  The mixed Poisson models that can be fit
   are used to estimate parameters of mixed proportional hazard models,
   as described for instance by Crowther et al (2014).
-  The statistical details are provided in Rotolo et al (2019).
+  The statistical details are provided in Rotolo et al (WP).
   
   The function \code{predict()} returns the estimated values
     of the log-hazard ratios on the true and the surrogate endpoints.
@@ -192,17 +192,11 @@ surrosurv(data,
   \emph{Journal of the America Statistical Association} 1965; \bold{60}:516--522.
   \doi{10.1080/01621459.1965.10480807}
   
- Rotolo F, Paoletti X, Michiels S.
-  surrosurv: an R Package for the Evaluation of Failure Time Surrogate Endpoints 
-  in Individual Patient Data Meta-Analyses of Randomized Clinical Trials.
-  \emph{Computer Methhods and Programs in Biomedicine} 2018;
-  \doi{10.1016/j.cmpb.2017.12.005}
-  
  Rotolo F, Paoletti X, Burzykowski T, Buyse M, Michiels S.
   A Poisson approach for the validation of failure time surrogate endpoints
   in individual patient data meta-analyses.
-  \emph{Statistical Methhods in Medical Research} 2019;
-  \bold{28(1)}.
+  \emph{Statistical Methods in Medical Research} 2017;
+  \bold{In Press}.
   \doi{10.1177/0962280217718582}
 
   Shih JH, Louis TA.
@@ -234,7 +228,7 @@ surrosurv(data,
   plot(survfit(Surv(timeT, statusT) ~ trt, data = data), lty = 1:2,
        xscale = 365.25, main = 'Overall Survival\n(T)')
        
-  \donttest{
+  \dontrun{
     # Long computation time!
     surrores <- surrosurv(data, verbose = TRUE)
     convergence(surrores)
@@ -242,7 +236,7 @@ surrosurv(data,
   }
   
   # Advanced GASTRIC data
-  \donttest{
+  \dontrun{
     # Long computation time!
     data('gastadv')
     allSurroRes <- surrosurv(gastadv, c('Clayton', 'Poisson'), verbose = TRUE)

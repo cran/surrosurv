@@ -32,13 +32,6 @@ ste(x, models = names(x), exact.models)
 
 \value{
   An object of class \code{steSurrosurv} 
-  containing, for each trial:
-  \item{}{
-    
-  }
-  \item{}{
-    
-  }
 }
   
 \references{
@@ -46,7 +39,7 @@ ste(x, models = names(x), exact.models)
     Surrogate threshold effect: an alternative measure
     for meta-analytic surrogate endpoint validation.
     \emph{Pharm Stat}. 2006;5(3):173-86.
-    doi:\href{http://dx.doi.org/10.1002/pst.207}{10.1002/pst.207}
+    \doi{10.1002/pst.207}
 }
 
 \author{
@@ -54,7 +47,7 @@ ste(x, models = names(x), exact.models)
 }
 
 \examples{
-  \donttest{
+  \dontrun{
   # Possibly long computation time!
   data('gastadv')
   mod <- surrosurv(gastadv, 'Clayton')

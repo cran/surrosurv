@@ -15,9 +15,9 @@
     \item{timeT:}{Overall survival time (days).}
     \item{statusT:}{Overall survival indicator (0=censored, 1=death).}
     \item{timeS:}{Disease-free survival time (days).}
-    \item{statusS:}{Disease-free survival indicator (0=censored, 1=prgoression on death).}
+    \item{statusS:}{Disease-free survival indicator (0=censored, 1=progression on death).}
     \item{trialref:}{Trial indicator}
-    \item{trt:}{Treatment arm (-0.5 = control, 0.5=chemomtherapy).}
+    \item{trt:}{Treatment arm (-0.5 = control, 0.5=chemotherapy).}
     \item{id:}{Patient identifier.}
     }
   }
@@ -41,19 +41,19 @@ The GASTRIC Group data are available within the \code{surrosurv} package
     Disease-free survival as a surrogate for overall survival in adjuvant trials
     of gastric cancer: a meta-analysis.
     \emph{J Ntl Cancer Inst}, 105(21):1600-7, 2013.
-    doi:\href{http://dx.doi.org/10.1093/jnci/djt270}{10.1093/jnci/djt270}.
+    \doi{10.1093/jnci/djt270}.
     
   The GASTRIC group.
-     Benefit of adjuvant chemotherapy for resectable gastric cancer:
-     a meta-analysis. 
+    Benefit of adjuvant chemotherapy for resectable gastric cancer:
+    a meta-analysis. 
     \emph{JAMA}, 303(17):1729-37, 2010.
-    doi:\href{http://dx.doi.org/10.1001/jama.2010.534}{10.1001/jama.2010.534}.
+    \doi{10.1001/jama.2010.534}.
     
   Buyse M, Molenberghs G, Paoletti Xavier et al.
     Statistical evaluation of surrogate endpoints
     with examples from cancer clinical trials.
     \emph{Biom J}, 58(1):104-32, 2016.
-    doi:\href{http://dx.doi.org/10.1002/bimj.201400049}{10.1002/bimj.201400049}
+    \doi{10.1002/bimj.201400049}
 }
 \examples{
   \dontrun{
